@@ -1,6 +1,8 @@
 """Build data/current.js: real matchups from real_data.py, placeholder (fake) numbers for every pair not entered yet."""
+import hashlib
 import itertools
 import json
+import re
 import random
 from pathlib import Path
 
@@ -91,4 +93,14 @@ data = {
 out = Path(__file__).resolve().parent.parent / "data" / "current.js"
 out.parent.mkdir(exist_ok=True)
 out.write_text("window.GALAXY_DATA = " + json.dumps(data, indent=1) + ";\n")
+# Version-stamp the files index.html loads (?v=<content hash>). Browsers may cache them for a while, and a new page
+# must never run with an old cached script; the stamp changes whenever a file does, so they always match.
+root = out.parent.parent
+index = root / "index.html"
+html = index.read_text()
+for name in ("style.css", "app.js", "data/current.js"):
+    v = hashlib.sha1((root / name).read_bytes()).hexdigest()[:8]
+    html = re.sub(rf'(["\']){re.escape(name)}(\?v=\w+)?\1', rf'\g<1>{name}?v={v}\g<1>', html)
+index.write_text(html)
+
 print(f"wrote {out} ({len(LEADERS)} leaders, {n_real}/{len(matchups)} matchups real, {len(mirrors)} mirrors)")

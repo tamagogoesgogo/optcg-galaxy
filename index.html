@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OPTCG Matchup Galaxy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <svg id="galaxy" aria-label="Matchup galaxy"></svg>
+
+  <header class="bar">
+    <div class="brand">
+      <div class="title">Matchup Galaxy</div>
+      <div id="about" class="about"></div>
+    </div>
+    <div class="controls">
+      <label>Min games
+        <input id="minGames" type="range" min="0" max="400" step="10" value="0">
+        <output id="minGamesOut">0</output>
+      </label>
+      <label>Only lopsided
+        <input id="minEdge" type="range" min="0" max="15" step="1" value="0">
+        <output id="minEdgeOut">off</output>
+      </label>
+    </div>
+    <div class="legend">
+      <span><svg width="30" height="8"><line x1="1" y1="4" x2="29" y2="4" class="lg"/></svg>going 1st</span>
+      <span><svg width="30" height="8"><line x1="1" y1="4" x2="29" y2="4" class="lg dashed"/></svg>going 2nd</span>
+      <span class="scale"><i>40%</i><b></b><i>60%</i></span>
+    </div>
+  </header>
+
+  <div id="banner" hidden>Sample data, not real win rates</div>
+  <p id="hint">Hover a leader to light up its matchups. Click one to bring it to the centre.</p>
+
+  <aside id="panel" hidden>
+    <button id="close" aria-label="Close">×</button>
+    <div id="panelBody"></div>
+  </aside>
+  <div id="tip" hidden></div>
+
+  <footer>Data: <span id="source"></span> · fan project, not affiliated with Bandai</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="data/current.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

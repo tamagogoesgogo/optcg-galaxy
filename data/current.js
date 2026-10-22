@@ -172,7 +172,13 @@ window.GALAXY_DATA = {
    ],
    "share": 0.0108,
    "img": "img/op09-062.jpg",
-   "stats": null
+   "stats": {
+    "wtd": 0.5001,
+    "raw": 0.5309,
+    "first": 0.5508,
+    "second": 0.503,
+    "games": 921
+   }
   },
   {
    "id": "op12-061",
@@ -1285,6 +1291,20 @@ window.GALAXY_DATA = {
    "second": {
     "wr": 0.72,
     "games": 18
+   },
+   "notes": "",
+   "real": true
+  },
+  {
+   "a": "op09-062",
+   "b": "op09-062",
+   "first": {
+    "wr": 0.75,
+    "games": 4
+   },
+   "second": {
+    "wr": 0.25,
+    "games": 4
    },
    "notes": "",
    "real": true

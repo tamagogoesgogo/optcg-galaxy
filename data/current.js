@@ -189,7 +189,13 @@ window.GALAXY_DATA = {
    ],
    "share": 0.023,
    "img": "img/op15-058.jpg",
-   "stats": null
+   "stats": {
+    "wtd": 0.4967,
+    "raw": 0.5107,
+    "first": 0.5612,
+    "second": 0.447,
+    "games": 1964
+   }
   }
  ],
  "matchups": [
@@ -477,15 +483,15 @@ window.GALAXY_DATA = {
    "a": "op05-098",
    "b": "op15-058",
    "first": {
-    "wr": 0.543,
-    "games": 14
+    "wr": 0.87,
+    "games": 8
    },
    "second": {
-    "wr": 0.6,
-    "games": 36
+    "wr": 0.64,
+    "games": 22
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op13-001",
@@ -603,15 +609,15 @@ window.GALAXY_DATA = {
    "a": "op13-001",
    "b": "op15-058",
    "first": {
-    "wr": 0.612,
-    "games": 32
+    "wr": 0.73,
+    "games": 30
    },
    "second": {
-    "wr": 0.533,
-    "games": 19
+    "wr": 0.54,
+    "games": 28
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "st30-001",
@@ -1093,15 +1099,15 @@ window.GALAXY_DATA = {
    "a": "op09-062",
    "b": "op15-058",
    "first": {
-    "wr": 0.569,
-    "games": 9
+    "wr": 1.0,
+    "games": 6
    },
    "second": {
-    "wr": 0.45,
+    "wr": 0.56,
     "games": 9
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op12-061",
@@ -1225,6 +1231,20 @@ window.GALAXY_DATA = {
    "second": {
     "wr": 0.59,
     "games": 27
+   },
+   "notes": "",
+   "real": true
+  },
+  {
+   "a": "op15-058",
+   "b": "op15-058",
+   "first": {
+    "wr": 0.73,
+    "games": 22
+   },
+   "second": {
+    "wr": 0.27,
+    "games": 22
    },
    "notes": "",
    "real": true

@@ -55,7 +55,13 @@ window.GALAXY_DATA = {
    ],
    "share": 0.0278,
    "img": "img/st30-001.jpg",
-   "stats": null
+   "stats": {
+    "wtd": 0.5438,
+    "raw": 0.5607,
+    "first": 0.5735,
+    "second": 0.548,
+    "games": 2381
+   }
   },
   {
    "id": "op14-001",
@@ -359,15 +365,15 @@ window.GALAXY_DATA = {
    "a": "op05-098",
    "b": "st30-001",
    "first": {
-    "wr": 0.517,
-    "games": 38
+    "wr": 0.5,
+    "games": 28
    },
    "second": {
-    "wr": 0.478,
-    "games": 37
+    "wr": 0.77,
+    "games": 31
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op05-098",
@@ -485,15 +491,15 @@ window.GALAXY_DATA = {
    "a": "op13-001",
    "b": "st30-001",
    "first": {
-    "wr": 0.553,
-    "games": 22
+    "wr": 0.68,
+    "games": 28
    },
    "second": {
-    "wr": 0.515,
-    "games": 13
+    "wr": 0.94,
+    "games": 18
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op13-001",
@@ -681,15 +687,15 @@ window.GALAXY_DATA = {
    "a": "st30-001",
    "b": "op09-062",
    "first": {
-    "wr": 0.574,
-    "games": 19
+    "wr": 0.76,
+    "games": 17
    },
    "second": {
-    "wr": 0.528,
-    "games": 25
+    "wr": 0.64,
+    "games": 11
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "st30-001",
@@ -709,15 +715,15 @@ window.GALAXY_DATA = {
    "a": "st30-001",
    "b": "op15-058",
    "first": {
-    "wr": 0.593,
-    "games": 34
+    "wr": 0.71,
+    "games": 31
    },
    "second": {
-    "wr": 0.466,
-    "games": 29
+    "wr": 0.56,
+    "games": 34
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op14-001",
@@ -1205,6 +1211,20 @@ window.GALAXY_DATA = {
    "second": {
     "wr": 0.46,
     "games": 26
+   },
+   "notes": "",
+   "real": true
+  },
+  {
+   "a": "st30-001",
+   "b": "st30-001",
+   "first": {
+    "wr": 0.41,
+    "games": 27
+   },
+   "second": {
+    "wr": 0.59,
+    "games": 27
    },
    "notes": "",
    "real": true

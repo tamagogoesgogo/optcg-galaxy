@@ -43,7 +43,13 @@ window.GALAXY_DATA = {
    ],
    "share": 0.0261,
    "img": "img/op13-001.jpg",
-   "stats": null
+   "stats": {
+    "wtd": 0.5579,
+    "raw": 0.5776,
+    "first": 0.6018,
+    "second": 0.553,
+    "games": 2230
+   }
   },
   {
    "id": "st30-001",
@@ -357,15 +363,15 @@ window.GALAXY_DATA = {
    "a": "op05-098",
    "b": "op13-001",
    "first": {
-    "wr": 0.561,
-    "games": 18
+    "wr": 0.79,
+    "games": 19
    },
    "second": {
-    "wr": 0.448,
-    "games": 38
+    "wr": 0.88,
+    "games": 33
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op05-098",
@@ -539,7 +545,7 @@ window.GALAXY_DATA = {
    "a": "op13-001",
    "b": "op13-004",
    "first": {
-    "wr": 0.62,
+    "wr": 0.63,
     "games": 64
    },
    "second": {
@@ -581,15 +587,15 @@ window.GALAXY_DATA = {
    "a": "op13-001",
    "b": "op09-062",
    "first": {
-    "wr": 0.638,
-    "games": 12
+    "wr": 0.52,
+    "games": 21
    },
    "second": {
-    "wr": 0.5,
-    "games": 10
+    "wr": 0.37,
+    "games": 19
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op13-001",
@@ -1245,6 +1251,20 @@ window.GALAXY_DATA = {
    "second": {
     "wr": 0.27,
     "games": 22
+   },
+   "notes": "",
+   "real": true
+  },
+  {
+   "a": "op13-001",
+   "b": "op13-001",
+   "first": {
+    "wr": 0.43,
+    "games": 37
+   },
+   "second": {
+    "wr": 0.57,
+    "games": 37
    },
    "notes": "",
    "real": true

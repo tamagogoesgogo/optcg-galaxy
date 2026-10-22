@@ -50,7 +50,9 @@
   const state = { focus: null, hover: null, mirror: null, minGames: 0 };
   let W = innerWidth, H = innerHeight;
   const panelOpen = () => !document.getElementById('panel').hidden;
-  const center = () => (W > 760 && panelOpen() ? [(W - 380) / 2, H / 2 + 20] : W > 760 ? [W / 2, H / 2 + 20] : [W / 2, panelOpen() ? H * 0.32 : H * 0.5]);
+  let sheetDown = false; // phones: the bottom sheet is swiped down to a slim bar
+  const sheetCovers = () => panelOpen() && !sheetDown;
+  const center = () => (W > 760 && panelOpen() ? [(W - 380) / 2, H / 2 + 20] : W > 760 ? [W / 2, H / 2 + 20] : [W / 2, sheetCovers() ? H * 0.32 : H * 0.5]);
 
   const svg = d3.select('#galaxy');
   const defs = svg.append('defs');
@@ -215,11 +217,18 @@
   }
 
   function focusLeader(d) {
-    leaders.forEach(n => { n.fx = n.fy = n.tx = n.ty = null; });
     state.focus = d;
     showLeaderPanel(d);
+    placeRing(d);
+    svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity);
+    restyle();
+  }
+
+  // opponents on a ring around the focused leader
+  function placeRing(d) {
+    leaders.forEach(n => { n.fx = n.fy = n.tx = n.ty = null; });
     const [cx, cy] = center();
-    const R = W > 760 ? Math.max(150, Math.min(panelOpen() ? W - 380 : W, H) * 0.36) : Math.min(W / 2 - 52, H * 0.22);
+    const R = W > 760 ? Math.max(150, Math.min(panelOpen() ? W - 380 : W, H) * 0.36) : Math.min(W / 2 - 52, H * (sheetCovers() ? 0.22 : 0.3));
     const opps = pairsOf(d.id).sort(byResult); // best matchup at the top, clockwise to worst, then no-data ones
     opps.forEach((v, i) => {
       const ang = -Math.PI / 2 + (i / opps.length) * 2 * Math.PI;
@@ -228,8 +237,6 @@
     });
     applyTargets();
     sim.alpha(0.9).restart();
-    svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity);
-    restyle();
   }
 
   function unfocus() {
@@ -254,14 +261,11 @@
     openMatchup(d.id, m);
     svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity);
 
-    const [cx, cy] = center();
-    const D = W > 760 ? Math.min(170, W * 0.15) : W / 2 - d.r - 36;
-    const sides = [{ kind: 'first', x: cx - D, s: m.first }, { kind: 'second', x: cx + D, s: m.second }];
+    const sides = [{ kind: 'first', s: m.first }, { kind: 'second', s: m.second }];
     mirrorG.selectAll('*').remove();
 
     mirrorG.selectAll('path').data(sides).join('path')
       .attr('class', s => 'mline ' + s.kind)
-      .attr('d', s => `M${cx - D},${cy}Q${cx},${cy + D * 0.45 * (s.kind === 'first' ? -1 : 1)} ${cx + D},${cy}`)
       .attr('stroke', s => wrColor(s.s.wr)).attr('stroke-width', s => strokeW(s.s.games))
       .attr('opacity', 0)
       .on('mousemove', (e, s) => {
@@ -282,7 +286,16 @@
       .attr('fill', d.img ? `url(#img-${d.id})` : `url(#grad-${d.id})`);
     copies.append('text').attr('class', 'name').attr('y', d.r).attr('dy', '1.35em').text(s => `going ${s.kind === 'first' ? '1st' : '2nd'}`);
     copies.append('text').attr('class', 'sub').attr('y', d.r).attr('dy', '2.1em').attr('fill', s => wrColor(s.s.wr)).text(s => pct0(s.s.wr) + '%');
-    copies.transition().duration(600).ease(d3.easeCubicOut).attr('transform', s => `translate(${s.x},${cy})`);
+    placeMirror();
+  }
+
+  function placeMirror() {
+    const d = state.mirror, [cx, cy] = center();
+    const D = W > 760 ? Math.min(170, W * 0.15) : W / 2 - d.r - 36;
+    mirrorG.selectAll('path')
+      .attr('d', s => `M${cx - D},${cy}Q${cx},${cy + D * 0.45 * (s.kind === 'first' ? -1 : 1)} ${cx + D},${cy}`);
+    mirrorG.selectAll('g.copy').transition('place').duration(600).ease(d3.easeCubicOut)
+      .attr('transform', s => `translate(${s.kind === 'first' ? cx - D : cx + D},${cy})`);
   }
 
   function exitMirror() {
@@ -303,9 +316,57 @@
   const panel = document.getElementById('panel');
   const body = document.getElementById('panelBody');
   const cell = s => `<span class="wr" style="color:${wrColor(s.wr)}">${pct(s.wr)}</span>`;
-  function openPanel() { panel.hidden = false; document.body.classList.add('panel-open'); }
-  function closePanel() { panel.hidden = true; document.body.classList.remove('panel-open'); }
-  document.getElementById('close').onclick = () => { exitMirror(); state.focus ? unfocus() : closePanel(); };
+  function openPanel() {
+    const wasDown = sheetDown;
+    panel.hidden = false; document.body.classList.add('panel-open');
+    setSheet(false, wasDown); // new content always shows the full sheet
+  }
+  function closePanel() { panel.hidden = true; document.body.classList.remove('panel-open'); setSheet(false, false); }
+
+  // ---- phones: the panel is a bottom sheet -------------------------------
+  // Swipe it down to a slim bar (the map gets the whole screen), swipe up or tap the bar to bring it back.
+  function setSheet(down, relayout = true) {
+    sheetDown = down;
+    panel.classList.toggle('down', down);
+    if (!relayout) return;
+    if (state.mirror) placeMirror();
+    else if (state.focus) placeRing(state.focus);
+    else { applyTargets(); sim.alpha(0.4).restart(); }
+  }
+
+  const grab = document.getElementById('grab');
+  let drag = null;
+  panel.addEventListener('touchstart', e => {
+    if (innerWidth > 760 || e.target.closest('#close, textarea, button')) return;
+    const onGrab = grab.contains(e.target);
+    // drag from the handle, from the slim bar, or from the sheet when it's scrolled to the top
+    if (!onGrab && !sheetDown && panel.scrollTop > 0) return;
+    drag = { y0: e.touches[0].clientY, dy: 0, onGrab, moving: false, base: sheetDown ? panel.offsetHeight - peek() : 0 };
+  }, { passive: true });
+  panel.addEventListener('touchmove', e => {
+    if (!drag) return;
+    drag.dy = e.touches[0].clientY - drag.y0;
+    if (!drag.moving) {
+      if (Math.abs(drag.dy) < 6) return;
+      if (!drag.onGrab && !sheetDown && drag.dy < 0) { drag = null; return; } // upward on an open sheet = normal scroll
+      drag.moving = true;
+      panel.style.transition = 'none';
+    }
+    e.preventDefault();
+    const y = Math.max(0, Math.min(panel.offsetHeight - peek(), drag.base + drag.dy));
+    panel.style.transform = `translateY(${y}px)`;
+  }, { passive: false });
+  panel.addEventListener('touchend', () => {
+    if (!drag) return;
+    const { moving, dy, onGrab } = drag;
+    drag = null;
+    panel.style.transition = ''; panel.style.transform = '';
+    if (!moving) { if (onGrab || sheetDown) setSheet(!sheetDown); return; } // a tap toggles
+    if (dy > 50 && !sheetDown) setSheet(true);
+    else if (dy < -50 && sheetDown) setSheet(false);
+  });
+  const peek = () => grab.offsetHeight + 44; // handle + the title line stay visible
+  document.getElementById('close').onclick = e => { e.stopPropagation(); exitMirror(); state.focus ? unfocus() : closePanel(); };
 
   // Short caveats about the leader's real matchup numbers, as HTML.
   function dataNotes(d, rows) {

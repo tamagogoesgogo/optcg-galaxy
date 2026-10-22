@@ -1,5 +1,5 @@
 window.GALAXY_DATA = {
- "sample": true,
+ "sample": false,
  "scope": "The 12 most popular leaders",
  "updated": "2026-10-22",
  "source": "Card Kaizoku",
@@ -31,7 +31,13 @@ window.GALAXY_DATA = {
    ],
    "share": 0.0205,
    "img": "img/op05-098.jpg",
-   "stats": null
+   "stats": {
+    "wtd": 0.562,
+    "raw": 0.5877,
+    "first": 0.5191,
+    "second": 0.634,
+    "games": 1751
+   }
   },
   {
    "id": "op13-001",
@@ -461,15 +467,15 @@ window.GALAXY_DATA = {
    "a": "op05-098",
    "b": "op09-062",
    "first": {
-    "wr": 0.623,
-    "games": 23
+    "wr": 0.33,
+    "games": 3
    },
    "second": {
-    "wr": 0.498,
-    "games": 7
+    "wr": 0.31,
+    "games": 16
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op05-098",
@@ -489,7 +495,7 @@ window.GALAXY_DATA = {
    "a": "op05-098",
    "b": "op15-058",
    "first": {
-    "wr": 0.87,
+    "wr": 0.88,
     "games": 8
    },
    "second": {
@@ -1265,6 +1271,20 @@ window.GALAXY_DATA = {
    "second": {
     "wr": 0.57,
     "games": 37
+   },
+   "notes": "",
+   "real": true
+  },
+  {
+   "a": "op05-098",
+   "b": "op05-098",
+   "first": {
+    "wr": 0.28,
+    "games": 18
+   },
+   "second": {
+    "wr": 0.72,
+    "games": 18
    },
    "notes": "",
    "real": true

@@ -166,7 +166,13 @@ window.GALAXY_DATA = {
    ],
    "share": 0.0272,
    "img": "img/op12-061.jpg",
-   "stats": null
+   "stats": {
+    "wtd": 0.4994,
+    "raw": 0.5116,
+    "first": 0.5472,
+    "second": 0.465,
+    "games": 2328
+   }
   },
   {
    "id": "op15-058",
@@ -451,15 +457,15 @@ window.GALAXY_DATA = {
    "a": "op05-098",
    "b": "op12-061",
    "first": {
-    "wr": 0.608,
-    "games": 31
-   },
-   "second": {
-    "wr": 0.528,
+    "wr": 0.17,
     "games": 12
    },
+   "second": {
+    "wr": 0.47,
+    "games": 47
+   },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op05-098",
@@ -577,15 +583,15 @@ window.GALAXY_DATA = {
    "a": "op13-001",
    "b": "op12-061",
    "first": {
-    "wr": 0.587,
-    "games": 25
+    "wr": 0.61,
+    "games": 23
    },
    "second": {
-    "wr": 0.515,
-    "games": 17
+    "wr": 0.63,
+    "games": 35
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op13-001",
@@ -689,15 +695,15 @@ window.GALAXY_DATA = {
    "a": "st30-001",
    "b": "op12-061",
    "first": {
-    "wr": 0.651,
-    "games": 28
+    "wr": 0.71,
+    "games": 17
    },
    "second": {
-    "wr": 0.512,
-    "games": 30
+    "wr": 0.74,
+    "games": 34
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "st30-001",
@@ -1067,15 +1073,15 @@ window.GALAXY_DATA = {
    "a": "op09-062",
    "b": "op12-061",
    "first": {
-    "wr": 0.529,
-    "games": 19
+    "wr": 0.2,
+    "games": 5
    },
    "second": {
-    "wr": 0.516,
-    "games": 16
+    "wr": 0.6,
+    "games": 5
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op09-062",
@@ -1095,15 +1101,15 @@ window.GALAXY_DATA = {
    "a": "op12-061",
    "b": "op15-058",
    "first": {
-    "wr": 0.538,
-    "games": 40
+    "wr": 0.57,
+    "games": 21
    },
    "second": {
-    "wr": 0.48,
-    "games": 26
+    "wr": 0.38,
+    "games": 32
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op14-001",
@@ -1185,6 +1191,20 @@ window.GALAXY_DATA = {
    "second": {
     "wr": 0.21,
     "games": 58
+   },
+   "notes": "",
+   "real": true
+  },
+  {
+   "a": "op12-061",
+   "b": "op12-061",
+   "first": {
+    "wr": 0.54,
+    "games": 26
+   },
+   "second": {
+    "wr": 0.46,
+    "games": 26
    },
    "notes": "",
    "real": true

@@ -136,7 +136,13 @@ window.GALAXY_DATA = {
    ],
    "share": 0.037,
    "img": "img/op17-058.jpg",
-   "stats": null
+   "stats": {
+    "wtd": 0.5088,
+    "raw": 0.5185,
+    "first": 0.5768,
+    "second": 0.439,
+    "games": 3167
+   }
   },
   {
    "id": "op09-062",
@@ -417,15 +423,15 @@ window.GALAXY_DATA = {
    "a": "op05-098",
    "b": "op17-058",
    "first": {
-    "wr": 0.536,
-    "games": 30
+    "wr": 0.25,
+    "games": 12
    },
    "second": {
-    "wr": 0.587,
-    "games": 32
+    "wr": 0.4,
+    "games": 53
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op05-098",
@@ -543,15 +549,15 @@ window.GALAXY_DATA = {
    "a": "op13-001",
    "b": "op17-058",
    "first": {
-    "wr": 0.583,
-    "games": 36
+    "wr": 0.46,
+    "games": 46
    },
    "second": {
-    "wr": 0.475,
-    "games": 24
+    "wr": 0.38,
+    "games": 47
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op13-001",
@@ -655,15 +661,15 @@ window.GALAXY_DATA = {
    "a": "st30-001",
    "b": "op17-058",
    "first": {
-    "wr": 0.558,
-    "games": 45
+    "wr": 0.72,
+    "games": 46
    },
    "second": {
-    "wr": 0.445,
-    "games": 21
+    "wr": 0.74,
+    "games": 53
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "st30-001",
@@ -1019,43 +1025,43 @@ window.GALAXY_DATA = {
    "a": "op17-058",
    "b": "op09-062",
    "first": {
-    "wr": 0.503,
-    "games": 7
+    "wr": 0.67,
+    "games": 12
    },
    "second": {
-    "wr": 0.504,
-    "games": 13
+    "wr": 0.61,
+    "games": 18
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op17-058",
    "b": "op12-061",
    "first": {
-    "wr": 0.529,
-    "games": 16
+    "wr": 0.7,
+    "games": 40
    },
    "second": {
-    "wr": 0.557,
-    "games": 14
+    "wr": 0.41,
+    "games": 32
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op17-058",
    "b": "op15-058",
    "first": {
-    "wr": 0.5,
-    "games": 19
+    "wr": 0.76,
+    "games": 41
    },
    "second": {
-    "wr": 0.522,
-    "games": 39
+    "wr": 0.47,
+    "games": 38
    },
    "notes": "",
-   "real": false
+   "real": true
   },
   {
    "a": "op09-062",
@@ -1165,6 +1171,20 @@ window.GALAXY_DATA = {
    "second": {
     "wr": 0.54,
     "games": 123
+   },
+   "notes": "",
+   "real": true
+  },
+  {
+   "a": "op17-058",
+   "b": "op17-058",
+   "first": {
+    "wr": 0.79,
+    "games": 58
+   },
+   "second": {
+    "wr": 0.21,
+    "games": 58
    },
    "notes": "",
    "real": true

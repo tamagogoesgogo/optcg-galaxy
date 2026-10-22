@@ -47,7 +47,7 @@
   leaders.forEach(d => { d.r = radius(d.share || 0); });
 
   // ---- state & layout --------------------------------------------------
-  const state = { focus: null, hover: null, mirror: null, minGames: 0, minEdge: 0 };
+  const state = { focus: null, hover: null, mirror: null, minGames: 0 };
   let W = innerWidth, H = innerHeight;
   const panelOpen = () => !document.getElementById('panel').hidden;
   const center = () => (W > 760 && panelOpen() ? [(W - 380) / 2, H / 2 + 20] : W > 760 ? [W / 2, H / 2 + 20] : [W / 2, panelOpen() ? H * 0.32 : H * 0.5]);
@@ -184,7 +184,7 @@
   // ---- interactions ----------------------------------------------------
   function restyle() {
     const active = state.focus || state.hover;
-    const passes = s => s.games >= state.minGames && Math.abs(s.wr - 0.5) >= state.minEdge;
+    const passes = s => s.games >= state.minGames;
 
     lines
       .attr('d', linePath)
@@ -399,15 +399,9 @@
 
   // ---- controls --------------------------------------------------------
   const minGames = document.getElementById('minGames');
-  const minEdge = document.getElementById('minEdge');
   minGames.oninput = () => {
     state.minGames = +minGames.value;
     document.getElementById('minGamesOut').textContent = minGames.value;
-    restyle();
-  };
-  minEdge.oninput = () => {
-    state.minEdge = +minEdge.value / 100;
-    document.getElementById('minEdgeOut').textContent = +minEdge.value ? '±' + minEdge.value + '%' : 'off';
     restyle();
   };
   document.addEventListener('keydown', e => { if (e.key === 'Escape') (state.mirror ? exitMirror() : unfocus()); });

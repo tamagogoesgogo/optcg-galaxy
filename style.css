@@ -92,11 +92,16 @@ svg.mirror-mode .leader, svg.mirror-mode .lines .mline { opacity: 0 !important; 
 footer { position: fixed; left: 16px; bottom: 10px; font-size: 0.8rem; color: var(--muted); }
 #mirrorBtn {
   position: fixed; z-index: 2; transform: translateX(-50%); padding: 11px 22px; border-radius: 999px;
-  border: 1px solid rgba(160, 175, 255, .4); background: var(--glass); backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, .9); background: var(--glass); backdrop-filter: blur(8px);
   color: var(--ink); font: inherit; font-size: 1.05rem; font-weight: 600; white-space: nowrap; cursor: pointer;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, .35); transition: background .2s, border-color .2s;
+  /* glow in the centred leader's colour (set from JS), like the halo around their portrait */
+  box-shadow: 0 0 10px 1px var(--glow, #8fa2ff), 0 0 26px 6px color-mix(in srgb, var(--glow, #8fa2ff) 55%, transparent);
+  transition: background .2s, box-shadow .2s;
 }
-#mirrorBtn:hover, #mirrorBtn.on { background: rgba(44, 52, 102, .85); border-color: rgba(160, 175, 255, .55); }
+#mirrorBtn:hover, #mirrorBtn.on {
+  background: rgba(44, 52, 102, .85);
+  box-shadow: 0 0 12px 2px var(--glow, #8fa2ff), 0 0 34px 10px color-mix(in srgb, var(--glow, #8fa2ff) 65%, transparent);
+}
 #mirrorBtn[hidden] { display: none; }
 
 /* side panel */

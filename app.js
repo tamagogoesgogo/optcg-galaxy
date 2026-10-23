@@ -309,6 +309,8 @@
     mirrorBtn.hidden = !(state.focus && mirrorOf.has(state.focus.id));
     mirrorBtn.classList.toggle('on', !!state.mirror);
     mirrorBtn.textContent = state.mirror ? '✕ Close mirror' : '⇄ Mirror match';
+    // same glow as the centred leader's halo
+    if (state.focus) mirrorBtn.style.setProperty('--glow', COLORS[(state.focus.colors || [])[0]] || '#8fa2ff');
     positionMirrorBtn();
   }
   function positionMirrorBtn() {

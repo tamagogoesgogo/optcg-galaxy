@@ -48,11 +48,6 @@ html, body {
 .leader .initials { fill: #fff; font-weight: 700; font-size: 0.9rem; stroke-width: 0; }
 .leader .name { fill: var(--ink); font-size: 0.85rem; }
 .leader .sub { fill: var(--muted); font-size: 0.8rem; font-variant-numeric: tabular-nums; }
-.mirror-badge { cursor: pointer; }
-.mirror-badge .hit { fill: transparent; }
-.mirror-badge .bg { fill: var(--bg); stroke: rgba(255, 255, 255, 0.75); stroke-width: 1.2; transition: fill .2s; }
-.mirror-badge .ring { fill: none; stroke: #fff; stroke-width: 1.2; }
-.mirror-badge:hover .bg { fill: #2c3466; }
 svg.mirror-mode .leader, svg.mirror-mode .lines .mline { opacity: 0 !important; pointer-events: none !important; }
 .copy .halo { opacity: 0.6; }
 .copy .disc { stroke: #fff; stroke-width: 2.5; }
@@ -95,6 +90,13 @@ svg.mirror-mode .leader, svg.mirror-mode .lines .mline { opacity: 0 !important; 
   color: var(--muted); font-size: 0.85rem; pointer-events: none;
 }
 footer { position: fixed; left: 16px; bottom: 10px; font-size: 0.8rem; color: var(--muted); }
+#mirrorBtn {
+  position: fixed; left: 16px; bottom: 40px; z-index: 2; padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--glass); backdrop-filter: blur(8px);
+  color: var(--ink); font: inherit; font-size: 0.9rem; cursor: pointer; transition: background .2s, border-color .2s;
+}
+#mirrorBtn:hover, #mirrorBtn.on { background: rgba(44, 52, 102, .85); border-color: rgba(160, 175, 255, .55); }
+#mirrorBtn[hidden] { display: none; }
 
 /* side panel */
 #panel {
@@ -170,4 +172,7 @@ body.panel-open #banner, body.panel-open #hint { display: none; }
   #panel.down { transform: translateY(calc(100% - 23px - 44px)); overflow: hidden; }
   #close { top: 18px; }
   .legend .scale, #hint { display: none; }
+  /* sits just above the bottom sheet and follows it when it's swiped down */
+  #mirrorBtn { left: 12px; bottom: calc(55vh + 12px); transition: bottom .28s cubic-bezier(.2, .8, .2, 1); }
+  body.sheet-down #mirrorBtn { bottom: 79px; }
 }

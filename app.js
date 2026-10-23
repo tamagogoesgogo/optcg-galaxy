@@ -38,13 +38,12 @@
   // matchups with real data first (best to worst), placeholder ones after
   const byResult = (a, b) => (b.real - a.real) || (avg(b) - avg(a));
 
-  // Every star gets a decent base size; more play rate = bigger (by area). Sizes also grow with the screen.
+  // All stars are the same size (easier to read than sizing by play rate); they grow a bit with the screen.
   const screenK = innerWidth > 760 ? Math.min(1.35, Math.max(0.85, Math.min(innerWidth, innerHeight) / 850))
     : Math.min(1.3, Math.max(0.9, innerWidth / 390));
-  const radius = d3.scaleSqrt().domain(d3.extent(leaders, d => d.share || 0))
-    .range((innerWidth > 760 ? [28, 58] : [16, 30]).map(r => r * screenK));
-  const strokeW = d3.scaleSqrt().domain([0, d3.max(pairs, m => Math.max(m.first.games, m.second.games)) || 1]).range([0.6, 4.5]);
-  leaders.forEach(d => { d.r = radius(d.share || 0); });
+  const starR = (innerWidth > 760 ? 40 : 22) * screenK;
+  const LINE_W = 2.2; // every matchup line has the same width
+  leaders.forEach(d => { d.r = starR; });
 
   // ---- state & layout --------------------------------------------------
   const state = { focus: null, hover: null, mirror: null, minGames: 0 };
@@ -143,16 +142,6 @@
   nodes.append('text').attr('class', 'name').attr('y', d => d.r).attr('dy', '1.35em').text(d => d.name);
   nodes.append('text').attr('class', 'sub').attr('y', d => d.r).attr('dy', '2.75em');
 
-  // mirror badge: two overlapping rings on the bottom edge of the star
-  const badges = nodes.filter(d => mirrorOf.has(d.id)).append('g').attr('class', 'mirror-badge')
-    .attr('transform', d => `translate(0,${d.r - 2})`)
-    .on('click', (e, d) => { e.stopPropagation(); state.mirror === d ? exitMirror() : enterMirror(d); });
-  badges.append('title').text('Mirror match');
-  badges.append('circle').attr('class', 'hit').attr('r', 16); // bigger invisible tap area for fingers
-  badges.append('circle').attr('class', 'bg').attr('r', 8.5);
-  badges.append('circle').attr('class', 'ring').attr('cx', -2.3).attr('r', 3.3);
-  badges.append('circle').attr('class', 'ring').attr('cx', 2.3).attr('r', 3.3);
-
   // ---- simulation ------------------------------------------------------
   const [cx0, cy0] = center();
   leaders.forEach(d => { d.x = cx0 + (Math.random() - 0.5) * 400; d.y = cy0 + (Math.random() - 0.5) * 300; });
@@ -196,7 +185,7 @@
         const ok = passes(s);
         d3.select(this)
           .attr('stroke', involved ? (d.m.real ? wrColor(s.wr) : '#5d6380') : '#a9b8ff')
-          .attr('stroke-width', involved ? (d.m.real ? strokeW(s.games) : 0.8) : 0.7)
+          .attr('stroke-width', involved ? (d.m.real ? LINE_W : 0.8) : 0.7)
           .attr('opacity', !ok ? 0 : !active ? (d.m.real ? 0.2 : 0.06) : involved ? (d.m.real ? 0.9 : 0.35) : 0.025)
           .style('pointer-events', involved && ok ? 'stroke' : 'none');
       });
@@ -218,6 +207,7 @@
 
   function focusLeader(d) {
     state.focus = d;
+    syncMirrorBtn();
     showLeaderPanel(d);
     placeRing(d);
     svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity);
@@ -243,6 +233,7 @@
     if (!state.focus) return;
     leaders.forEach(n => { n.fx = n.fy = n.tx = n.ty = null; });
     state.focus = null;
+    syncMirrorBtn();
     closePanel();
     applyTargets();
     sim.alpha(0.6).restart();
@@ -256,6 +247,7 @@
   function enterMirror(d) {
     const m = mirrorOf.get(d.id);
     state.mirror = d;
+    syncMirrorBtn();
     tip.hidden = true;
     svg.classed('mirror-mode', true);
     openMatchup(d.id, m);
@@ -266,7 +258,7 @@
 
     mirrorG.selectAll('path').data(sides).join('path')
       .attr('class', s => 'mline ' + s.kind)
-      .attr('stroke', s => wrColor(s.s.wr)).attr('stroke-width', s => strokeW(s.s.games))
+      .attr('stroke', s => wrColor(s.s.wr)).attr('stroke-width', LINE_W)
       .attr('opacity', 0)
       .on('mousemove', (e, s) => {
         tip.innerHTML = `<b>${esc(d.name)}</b> mirror · going ${s.kind === 'first' ? '1st' : '2nd'}: `
@@ -301,11 +293,21 @@
   function exitMirror() {
     if (!state.mirror) return;
     state.mirror = null;
+    syncMirrorBtn();
     tip.hidden = true;
     svg.classed('mirror-mode', false);
     mirrorG.selectAll('*').remove();
     if (state.focus) showLeaderPanel(state.focus); else closePanel();
   }
+
+  // Mirror button (bottom left): only while a leader is in the centre; opens/closes that leader's mirror view.
+  const mirrorBtn = document.getElementById('mirrorBtn');
+  function syncMirrorBtn() {
+    mirrorBtn.hidden = !(state.focus && mirrorOf.has(state.focus.id));
+    mirrorBtn.classList.toggle('on', !!state.mirror);
+    mirrorBtn.textContent = state.mirror ? '✕ Close mirror' : '⇄ Mirror match';
+  }
+  mirrorBtn.onclick = e => { e.stopPropagation(); state.mirror ? exitMirror() : enterMirror(state.focus); };
 
   function onLeaderClick(d) {
     if (!state.focus || state.focus === d) focusLeader(d);
@@ -328,6 +330,7 @@
   function setSheet(down, relayout = true) {
     sheetDown = down;
     panel.classList.toggle('down', down);
+    document.body.classList.toggle('sheet-down', down);
     if (!relayout) return;
     if (state.mirror) placeMirror();
     else if (state.focus) placeRing(state.focus);

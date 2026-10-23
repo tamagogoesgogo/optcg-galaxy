@@ -84,7 +84,7 @@
   drawStars();
 
   const root = svg.append('g');
-  const zoom = d3.zoom().scaleExtent([0.3, 4]).on('zoom', e => root.attr('transform', e.transform));
+  const zoom = d3.zoom().scaleExtent([0.3, 4]).on('zoom', e => { root.attr('transform', e.transform); positionMirrorBtn(); });
   svg.call(zoom).on('dblclick.zoom', null);
   svg.on('click', e => { if (e.target === svg.node() || e.target.classList.contains('star')) (state.mirror ? exitMirror() : unfocus()); });
 
@@ -227,6 +227,7 @@
     });
     applyTargets();
     sim.alpha(0.9).restart();
+    positionMirrorBtn();
   }
 
   function unfocus() {
@@ -282,6 +283,7 @@
   }
 
   function placeMirror() {
+    positionMirrorBtn();
     const d = state.mirror, [cx, cy] = center();
     const D = W > 760 ? Math.min(170, W * 0.15) : W / 2 - d.r - 36;
     mirrorG.selectAll('path')
@@ -300,12 +302,20 @@
     if (state.focus) showLeaderPanel(state.focus); else closePanel();
   }
 
-  // Mirror button (bottom left): only while a leader is in the centre; opens/closes that leader's mirror view.
+  // Mirror button: only while a leader is in the centre; it sits right under that leader's name (and between the two
+  // copies in the mirror view), following pan/zoom, and opens/closes the mirror view.
   const mirrorBtn = document.getElementById('mirrorBtn');
   function syncMirrorBtn() {
     mirrorBtn.hidden = !(state.focus && mirrorOf.has(state.focus.id));
     mirrorBtn.classList.toggle('on', !!state.mirror);
     mirrorBtn.textContent = state.mirror ? '✕ Close mirror' : '⇄ Mirror match';
+    positionMirrorBtn();
+  }
+  function positionMirrorBtn() {
+    if (mirrorBtn.hidden) return;
+    const t = d3.zoomTransform(svg.node()), [x, y] = t.apply(center());
+    mirrorBtn.style.left = x + 'px';
+    mirrorBtn.style.top = y + (starR + 30) * t.k + 'px'; // below the star and its name label
   }
   mirrorBtn.onclick = e => { e.stopPropagation(); state.mirror ? exitMirror() : enterMirror(state.focus); };
 

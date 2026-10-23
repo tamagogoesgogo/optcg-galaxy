@@ -91,9 +91,10 @@ svg.mirror-mode .leader, svg.mirror-mode .lines .mline { opacity: 0 !important; 
 }
 footer { position: fixed; left: 16px; bottom: 10px; font-size: 0.8rem; color: var(--muted); }
 #mirrorBtn {
-  position: fixed; left: 16px; bottom: 40px; z-index: 2; padding: 8px 16px; border-radius: 999px;
-  border: 1px solid var(--line); background: var(--glass); backdrop-filter: blur(8px);
-  color: var(--ink); font: inherit; font-size: 0.9rem; cursor: pointer; transition: background .2s, border-color .2s;
+  position: fixed; z-index: 2; transform: translateX(-50%); padding: 11px 22px; border-radius: 999px;
+  border: 1px solid rgba(160, 175, 255, .4); background: var(--glass); backdrop-filter: blur(8px);
+  color: var(--ink); font: inherit; font-size: 1.05rem; font-weight: 600; white-space: nowrap; cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .35); transition: background .2s, border-color .2s;
 }
 #mirrorBtn:hover, #mirrorBtn.on { background: rgba(44, 52, 102, .85); border-color: rgba(160, 175, 255, .55); }
 #mirrorBtn[hidden] { display: none; }
@@ -172,7 +173,5 @@ body.panel-open #banner, body.panel-open #hint { display: none; }
   #panel.down { transform: translateY(calc(100% - 23px - 44px)); overflow: hidden; }
   #close { top: 18px; }
   .legend .scale, #hint { display: none; }
-  /* sits just above the bottom sheet and follows it when it's swiped down */
-  #mirrorBtn { left: 12px; bottom: calc(55vh + 12px); transition: bottom .28s cubic-bezier(.2, .8, .2, 1); }
-  body.sheet-down #mirrorBtn { bottom: 79px; }
+  #mirrorBtn { padding: 9px 18px; font-size: 1rem; }
 }

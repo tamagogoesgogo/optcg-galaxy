@@ -26,9 +26,14 @@ Each matchup is stored once, from leader `a`'s perspective:
 
 `first` is a's win rate when a goes 1st. `b`'s numbers are derived from it (b going 1st = 1 − a's `second`).
 
-Real numbers are typed in from Card Kaizoku screenshots into `tools/real_data.py`. Run `python3 tools/build_data.py`
-to rebuild `data/current.js`: pairs without real data get placeholder numbers, flagged `"real": false`, which the page
-shows as grey "no data yet" lines.
+Real numbers come from Card Kaizoku and live in `tools/real_data.py`; `python3 tools/build_data.py` turns them into
+`data/current.js`, warns if a matchup disagrees between the two leaders' pages, and version-stamps `index.html`.
+
+## Refreshing the data
+1. On cardkaizoku.com, open each of the 12 leaders' stats pages with the same period selected.
+2. Click "Show More" until the matchup grid is complete, then save the page (Ctrl+S) into Downloads.
+3. `python3 tools/import_page.py --write YYYY-MM-DD ~/Downloads/*Kaizoku*.html` (refuses if anything is missing).
+4. `python3 tools/build_data.py`, check the site locally, then commit and push. GitHub Pages updates in about a minute.
 
 ## Hosting
-The site is static, so GitHub Pages or Cloudflare Pages can host it for free (`*.github.io` / `*.pages.dev`).
+Live on GitHub Pages: https://tamagogoesgogo.github.io/optcg-galaxy/ — every push to `main` redeploys.

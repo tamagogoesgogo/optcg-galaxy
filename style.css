@@ -91,9 +91,9 @@ svg.mirror-mode .leader, svg.mirror-mode .lines .mline { opacity: 0 !important; 
 }
 footer { position: fixed; left: 16px; bottom: 10px; font-size: 0.8rem; color: var(--muted); }
 #mirrorBtn {
-  position: fixed; z-index: 2; transform: translateX(-50%); padding: 11px 22px; border-radius: 999px;
+  position: fixed; z-index: 2; transform: translateX(-50%); padding: 8px 16px; border-radius: 999px;
   border: 2px solid rgba(255, 255, 255, .9); background: var(--glass); backdrop-filter: blur(8px);
-  color: var(--ink); font: inherit; font-size: 1.05rem; font-weight: 600; white-space: nowrap; cursor: pointer;
+  color: var(--ink); font: inherit; font-size: 0.92rem; font-weight: 600; white-space: nowrap; cursor: pointer;
   /* glow in the centred leader's colour (set from JS), like the halo around their portrait */
   box-shadow: 0 0 10px 1px var(--glow, #8fa2ff), 0 0 26px 6px color-mix(in srgb, var(--glow, #8fa2ff) 55%, transparent);
   transition: background .2s, box-shadow .2s;
@@ -178,5 +178,6 @@ body.panel-open #banner, body.panel-open #hint { display: none; }
   #panel.down { transform: translateY(calc(100% - 23px - 44px)); overflow: hidden; }
   #close { top: 18px; }
   .legend .scale, #hint { display: none; }
-  #mirrorBtn { padding: 9px 18px; font-size: 1rem; }
+  #mirrorBtn { padding: 6px 13px; font-size: 0.85rem; }
+  #mirrorBtn::after { content: ''; position: absolute; inset: -8px -6px; } /* bigger tap area than it looks */
 }

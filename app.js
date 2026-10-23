@@ -317,7 +317,7 @@
     if (mirrorBtn.hidden) return;
     const t = d3.zoomTransform(svg.node()), [x, y] = t.apply(center());
     mirrorBtn.style.left = x + 'px';
-    mirrorBtn.style.top = y + (starR + 30) * t.k + 'px'; // below the star and its name label
+    mirrorBtn.style.top = y + (starR + (W > 760 ? 30 : 24)) * t.k + 'px'; // below the star and its name label
   }
   mirrorBtn.onclick = e => { e.stopPropagation(); state.mirror ? exitMirror() : enterMirror(state.focus); };
 

@@ -6,7 +6,7 @@ import re
 import random
 from pathlib import Path
 
-from real_data import LEADER_STATS, MIRRORS, MATCHUPS as REAL
+from real_data import UPDATED, LEADER_STATS, MIRRORS, MATCHUPS as REAL
 
 random.seed(16)
 
@@ -83,7 +83,7 @@ n_real = sum(m["real"] for m in matchups)
 data = {
     "sample": n_real < len(matchups),
     "scope": "The 12 most popular leaders",
-    "updated": "2026-10-22",
+    "updated": UPDATED,
     "source": "Card Kaizoku",
     "queue": "private lobbies, spoiler queue",
     "leaders": [{"id": i, "code": code, "name": n, "colors": c, "share": s, "img": f"img/{i}.jpg", "stats": LEADER_STATS.get(i)} for i, n, c, s, _, code in LEADERS],

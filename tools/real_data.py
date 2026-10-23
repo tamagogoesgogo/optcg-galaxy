@@ -4,6 +4,9 @@ MATCHUPS are keyed (me, opponent) and seen from `me`'s side: (win rate going 1st
 win rate going 2nd, games going 2nd). Card Kaizoku shows whole percentages, so that's the precision here.
 """
 
+# Date shown in the site header ("data from ...").
+UPDATED = "2026-10-22"
+
 # Leader page summary boxes: weighted WR, raw WR, 1st WR, 2nd WR, total games.
 LEADER_STATS = {
     # 2026-10-22
